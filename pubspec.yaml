@@ -27,7 +27,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.pavelclaudiustefan.geocoder.flutter_geocoder_reborn
+        package: com.pavelclaudiustefan.flutter_geocoder_reborn
         pluginClass: FlutterGeocoderRebornPlugin
       ios:
         pluginClass: FlutterGeocoderRebornPlugin
