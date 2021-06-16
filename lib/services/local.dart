@@ -15,6 +15,10 @@ class LocalGeocoding implements Geocoding {
   }
 
   Future<List<Address>> findAddressesFromQuery(String address) async {
+    if (address.isEmpty) {
+      return [];
+    }
+
     Iterable coordinates = await _channel.invokeMethod('findAddressesFromQuery', {"address": address});
     return coordinates.map((x) => Address.fromMap(x)).toList();
   }

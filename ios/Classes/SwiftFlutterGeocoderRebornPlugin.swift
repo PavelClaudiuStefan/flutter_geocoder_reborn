@@ -28,14 +28,24 @@ public class SwiftFlutterGeocoderRebornPlugin: NSObject, FlutterPlugin {
         let lng = args["longitude"] as? Double
         
         if (lat == nil || lng == nil) {
-            result(FlutterError(code: "LatLngError", message: "Latitude and longitude cannot be null", details: nil))
+            result(FlutterError(code: "input_error", message: "Latitude and longitude cannot be null", details: nil))
         }
         
         let location = CLLocation(latitude: lat!, longitude: lng!)
         self.initializeGeocoder()
         self.geocoder!.reverseGeocodeLocation(location) { placemarks, error in
             if (error != nil) {
-                result(FlutterError(code: "ReverseGeocodeError", message: "\(error!)", details: nil))
+                if let nsError = error as NSError? {
+                    if (nsError.domain == "kCLErrorDomain" && nsError.code == 8) {
+                        // Not enough info from location name
+                        result([])
+                        
+                    } else {
+                        result(FlutterError(code: "failed", message: nsError.localizedDescription, details: nil))
+                    }
+                } else {
+                    result(FlutterError(code: "failed", message: error!.localizedDescription, details: nil))
+                }
             }
             
             result(self.placemarksToDictionary(placemarks))
@@ -49,13 +59,23 @@ public class SwiftFlutterGeocoderRebornPlugin: NSObject, FlutterPlugin {
         let address: String? = args["address"] as? String
         
         if (address == nil) {
-            result(FlutterError(code: "AddressError", message: "Address cannot be null", details: nil))
+            result(FlutterError(code: "input_error", message: "Address cannot be null", details: nil))
         }
         
         self.initializeGeocoder()
         self.geocoder!.geocodeAddressString(address!, completionHandler: { placemarks, error in
             if (error != nil) {
-                result(FlutterError(code: "GeocodeAddressError", message: "\(error!)", details: nil))
+                if let nsError = error as NSError? {
+                    if (nsError.domain == "kCLErrorDomain" && nsError.code == 8) {
+                        // Not enough info from location name
+                        result([])
+                        
+                    } else {
+                        result(FlutterError(code: "failed", message: nsError.localizedDescription, details: nil))
+                    }
+                } else {
+                    result(FlutterError(code: "failed", message: error!.localizedDescription, details: nil))
+                }
             }
             
             result(self.placemarksToDictionary(placemarks))
