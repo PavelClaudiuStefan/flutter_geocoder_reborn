@@ -1,5 +1,4 @@
-package com.pavelclaudiustefan.geocoder.flutter_geocoder_reborn
-
+package com.pavelclaudiustefan.flutter_geocoder_reborn
 
 import android.location.Address
 import android.location.Geocoder
@@ -160,10 +159,11 @@ class FlutterGeocoderRebornPlugin: FlutterPlugin, MethodCallHandler {
 
   private fun createAddressMapList(addresses: List<Address?>?): List<Map<String, Any?>?> {
     if (addresses == null) return ArrayList()
-    val result: List<Map<String, Any?>?> = ArrayList(addresses.size)
-    for (address in addresses) {
-      result.plus(createAddressMap(address))
+
+    val result: List<Map<String, Any?>?> = addresses.map {
+      createAddressMap(it)
     }
+
     return result
   }
 

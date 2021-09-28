@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import '../model.dart';
 import '../services/base.dart';
 
-/// Geocoding and reverse geocoding through built-lin local platform services.
+/// Geocoding and reverse geocoding through built-in local platform services.
 class LocalGeocoding implements Geocoding {
   static const MethodChannel _channel = MethodChannel('flutter_geocoder_reborn');
 

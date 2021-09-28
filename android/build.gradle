@@ -1,4 +1,4 @@
-group 'com.pavelclaudiustefan.geocoder.flutter_geocoder_reborn'
+group 'com.pavelclaudiustefan.flutter_geocoder_reborn'
 version '1.0-SNAPSHOT'
 
 buildscript {
