@@ -27,6 +27,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
+    namespace 'com.pavelclaudiustefan.geocoder.flutter_geocoder_reborn'
     compileSdkVersion 30
 
     compileOptions {
